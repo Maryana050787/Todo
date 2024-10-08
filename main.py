@@ -3,8 +3,8 @@ class Todo:
     def __init__(self):
         self.issue = {}
         self.count = 0
-        self.count_no_complete = 0
-        self.count_transfer = 0
+        self.__count_no_complete = 0
+        self.__count_transfer = 0
         
     def add_issue(self, issue, clock, complete, transfer):
         self.issue[issue] = [clock, complete, transfer]
@@ -16,18 +16,18 @@ class Todo:
         
     def get_count(self):
         return self.count
-    
-    def get_count_no_complete(self):
-        return self.count_no_complete
-    
-    def get_count_transfer(self):
-        return self.count_transfer
-    
-    def set_count_no_complete(self, count_no_complete):
-        self.count_no_complete = count_no_complete
-        
-    def set_count_transfer(self, count_transfer):
-        self.count_transfer = count_transfer
+    @property
+    def  count_no_complete(self):
+        return self.__count_no_complete
+    @property
+    def count_transfer(self):
+        return self.__count_transfer
+    @count_no_complete.setter
+    def count_no_complete(self, count_no_complete):
+        self.__count_no_complete = count_no_complete
+    @count_transfer.setter    
+    def count_transfer(self, count_transfer):
+        self.__count_transfer = count_transfer
     
     def change_issue(self, issue):
         temp = self.issue.get(issue)
@@ -54,8 +54,4 @@ todo.change_issue('Уборка')
 todo.show()
 
 
-todo.set_count_transfer(10)
-todo.set_count_no_complete(14)
 
-print(todo.get_count_transfer())
-print(todo.get_count_no_complete())
