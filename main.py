@@ -10,6 +10,9 @@ class Todo:
     # Функция добавляет новое дело    
     def add_issue(self, issue, clock, complete, transfer):
         self.issue[issue] = [clock, complete, transfer]
+        #Создание временного словаря и сортировка по времени
+        sort_issue = dict(sorted(self.issue.items(), key = lambda item: (int(item[1][0].split(':')[0]),int(item[1][0].split(':')[1]))))
+        self.issue = sort_issue#Замена старого словаря на новый
         self.init_count()
         
         
@@ -56,12 +59,14 @@ class Todo:
         
         
     # Изменяет состояние дела Перенесено\не перенесено    
-    def change_transfer(self, issue):
+    def change_transfer(self, issue, new_time):
         temp = self.issue.get(issue)
         if temp[2] == False:
-            temp[2] = True 
+            temp[2] = True
+            self.transfer_issue[issue] = [new_time,False, False] #добавляем дело в новый словарь 
         else:
             temp[2] == False
+            self.transfer_issue.pop(issue)#удаляем дело
         self.issue.update({issue:temp})
         self.init_count()
         
@@ -96,6 +101,9 @@ todo = Todo()
 todo.add_issue('Завтрак', '8:30', False, False)
 todo.add_issue('Уборка', '10:00', False, False )
 todo.add_issue('Корм. кот.', '12:30', False, False)
+todo.add_issue('Ожидание курьера', '10:45', False, False)
+todo.add_issue('Починка крана', '12:15', False, False)
+
 
 todo.change_issue('Завтрак')
 todo.change_transfer('Уборка')
