@@ -19,6 +19,13 @@ class Todo:
     # Функция для удаления дела   
     def delete_issue(self, issue):
         self.issue.pop(issue)
+        #Проверка наличия дела в словаре перенесенных дел
+        if self.transfer_issue.get(issue):
+            #Удаление дела из словаря перенесенных дел
+            self.transfer_issue.pop(issue)
+        #Создание временного словаря и сортировка по времени
+        sort_issue = dict(sorted(self.issue.items(), key = lambda item: (int(item[1][0].split(':')[0]),int(item[1][0].split(':')[1]))))
+        self.issue = sort_issue#Замена старого словаря на новый
         self.init_count()
         
         
@@ -86,6 +93,11 @@ class Todo:
         self.count_transfer = c_transfer
         self.count = count
         
+    def new_issue(self):
+        task = input('Введите название дела: ')
+        time = input('Введите время в формате чч:мм: ')
+        self.add_issue(task, time, False, False)
+        
     
     # Выводит информацию о всех делах    
     def show(self):
@@ -103,12 +115,16 @@ todo.add_issue('Уборка', '10:00', False, False )
 todo.add_issue('Корм. кот.', '12:30', False, False)
 todo.add_issue('Ожидание курьера', '10:45', False, False)
 todo.add_issue('Починка крана', '12:15', False, False)
+todo.new_issue()
+todo.new_issue()
+# todo.new_issue()
 
 
-todo.change_issue('Завтрак')
-todo.change_transfer('Уборка')
-todo.change_issue('Корм. кот.')
+# todo.change_issue('Завтрак')
+# todo.change_transfer('Уборка')
+# todo.change_issue('Корм. кот.')
 todo.show()
+
 
 
 
