@@ -94,8 +94,16 @@ class Todo:
         self.count = count
         
     def new_issue(self):
-        task = input('Введите название дела: ')
-        time = input('Введите время в формате чч:мм: ')
+        task = input('Введите название дела: ')#Вводим дело
+        time = input('Введите время в формате чч:мм: ')#Вводим время
+        busy_time = []
+        for i in self.issue.values():
+            busy_time.append(i[0])
+        if time not in busy_time:
+            self.add_issue(task, time, False, False)
+        else:
+            print('Укажите другое время')
+            
         self.add_issue(task, time, False, False)
         
     
@@ -123,6 +131,7 @@ todo.new_issue()
 # todo.change_issue('Завтрак')
 # todo.change_transfer('Уборка')
 # todo.change_issue('Корм. кот.')
+
 todo.show()
 
 
