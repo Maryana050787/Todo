@@ -14,6 +14,13 @@ class Todo:
         sort_issue = dict(sorted(self.issue.items(), key = lambda item: (int(item[1][0].split(':')[0]),int(item[1][0].split(':')[1]))))
         self.issue = sort_issue#Замена старого словаря на новый
         self.init_count()
+    #Юнит тест функции add_issue    
+    def test_add_issue(self):
+        self.add_issue('Тест', '7:00', False, False)#Создали тестовое дело
+        if self.issue.get('Тест') and self.issue['Тест'][0] == '7:00':#Проверили, что дело добавлено и время верное
+            print('Тест пройден')
+        else:
+            print('Тест не пройден')
         
         
     # Функция для удаления дела   
@@ -104,8 +111,36 @@ class Todo:
         else:
             print('Укажите другое время')
             
-        self.add_issue(task, time, False, False)
         
+    
+    def menu (self):
+        print('---------------------------------------')
+        print('|Введите 1, чтобы добавить дело       |')
+        print('|Введите 2, чтобы удалить дело        |')
+        print('|Введите 3, чтобы вывести список дел  |')
+        print('|Введите 4, чтобы поменять статус дела|')
+        print('|Введите 5, чтобы перенести дело      |')
+        print('|Введите 0, чтобы выйти из программы  |')
+        print('---------------------------------------')
+    def start(self):
+        exit = True
+        while exit:
+            self.menu()
+            choise = int(input('Выберите действие: '))
+            match choise:
+                case 1:
+                    self.new_issue()
+                case 2:
+                    self.delete_issue(input('Введите название дела: '))
+                case 3:
+                    self.show()
+                case 4:
+                    self.change_issue(input('Введите название дела: '))
+                case 5:
+                    self.change_transfer(input('Введите название дела: '), input('Введите новое время чч:мм - '))
+                case 0:
+                    exit = False    
+               
     
     # Выводит информацию о всех делах    
     def show(self):
@@ -118,13 +153,15 @@ class Todo:
         print(f'Общее количество дел: {self.count}')
             
 todo = Todo()
-todo.add_issue('Завтрак', '8:30', False, False)
-todo.add_issue('Уборка', '10:00', False, False )
-todo.add_issue('Корм. кот.', '12:30', False, False)
-todo.add_issue('Ожидание курьера', '10:45', False, False)
-todo.add_issue('Починка крана', '12:15', False, False)
-todo.new_issue()
-todo.new_issue()
+todo.test_add_issue()#Вызвали тест для add_issue
+# todo.start()
+# todo.add_issue('Завтрак', '8:30', False, False)
+# todo.add_issue('Уборка', '10:00', False, False )
+# todo.add_issue('Корм. кот.', '12:30', False, False)
+# todo.add_issue('Ожидание курьера', '10:45', False, False)
+# todo.add_issue('Починка крана', '12:15', False, False)
+# todo.new_issue()
+# todo.new_issue()
 # todo.new_issue()
 
 
@@ -132,7 +169,7 @@ todo.new_issue()
 # todo.change_transfer('Уборка')
 # todo.change_issue('Корм. кот.')
 
-todo.show()
+# todo.show()
 
 
 
